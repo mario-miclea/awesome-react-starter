@@ -18,3 +18,4 @@ export { default as QuoteSuccess } from './QuoteSuccess';
 export { default as SayGoodbye } from './SayGoodbye';
 export { default as SayHello } from './SayHello';
 export { default as Setup2FAModal } from './Setup2FAModal';
+export { default as Validate2FAModal } from './Validate2FAModal';
