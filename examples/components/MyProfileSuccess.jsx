@@ -1,5 +1,5 @@
-import React from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
+import { MobileAppAuthentication } from '.';
 import MyProfileChangePassword from './MyProfileChangePassword';
 import MyProfileDetails from './MyProfileDetails';
 
@@ -11,6 +11,9 @@ const MyProfileSuccess = ({ name, email }) => (
       </Tab>
       <Tab eventKey="2" title={<p>Change Password</p>}>
         <MyProfileChangePassword />
+      </Tab>
+      <Tab eventKey="3" title={<p>Mobile App Authentication</p>}>
+        <MobileAppAuthentication />
       </Tab>
     </Tabs>
   </>
