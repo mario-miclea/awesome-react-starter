@@ -1,4 +1,4 @@
-import { generateOTP } from '@api/otp';
+import { disableOTP, generateOTP } from '@api/otp';
 import { Button } from '@components';
 import { useDisclosure, useMutation } from '@hooks';
 import { useState } from 'react';
@@ -14,7 +14,7 @@ const MobileAppAuthentication = () => {
 
   const [otpData, setOtpData] = useState(null);
 
-  const mutation = useMutation(generateOTP, {
+  const setupMutation = useMutation(generateOTP, {
     invalidateQueries: '/examples/profile',
     onSuccess: (data) => {
       setOtpData(data);
@@ -22,20 +22,32 @@ const MobileAppAuthentication = () => {
   });
 
   const handleSetupClick = async () => {
-    await mutation.mutateAsync();
+    await setupMutation.mutateAsync();
     showSetupModal();
+  };
+
+  const disableMutation = useMutation(disableOTP, {
+    invalidateQueries: '/examples/profile',
+  });
+
+  const handleDisableClick = async () => {
+    await disableMutation.mutateAsync();
   };
 
   return (
     <div className="p-10 flex flex-col gap-5">
       <p>Secure your account with TOTP two-factor authentication.</p>
-      <Button onClick={handleSetupClick} className="button full primary no-underline">
-        Setup 2FA
-      </Button>
-
-      <Button onClick={showValidateModal} className="button full primary no-underline">
-        Validate 2FA
-      </Button>
+      <div className="flex gap-5">
+        <Button onClick={handleSetupClick} className="button full primary no-underline">
+          Setup 2FA
+        </Button>
+        <Button onClick={showValidateModal} className="button full primary no-underline">
+          Validate 2FA
+        </Button>
+        <Button onClick={handleDisableClick} className="button full no-underline">
+          Disable 2FA
+        </Button>
+      </div>
 
       {isSetupModalOpen && (
         <Setup2FAModal data={otpData} hide={hideSetupModal} isOpen={isSetupModalOpen} />
